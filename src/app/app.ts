@@ -1,8 +1,10 @@
+import { ProgressNotes } from './progress-notes/progress-notes';
+import { MilestoneTracker } from './milestone-tracker/milestone-tracker';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MilestoneTracker, ProgressNotes],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
