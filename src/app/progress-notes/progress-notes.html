@@ -1,5 +1,14 @@
 <h2>Progress Notes</h2>
 
+<label for="progress-note">Progress Note:</label>
+
+<input
+    id="progress-note"
+    type="text"
+    [(ngModel)]="progressNote">
+
+<p>Current Note: {{ progressNote }}</p>
+
 <form [formGroup]="progressForm">
 
     <div>

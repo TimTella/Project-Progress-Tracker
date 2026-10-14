@@ -1,8 +1,8 @@
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { Component } from '@angular/core';
 
 @Component({
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   selector: 'app-progress-notes',
   styleUrl: './progress-notes.css',
   templateUrl: './progress-notes.html',
@@ -15,4 +15,5 @@ export class ProgressNotes {
     teamMember: new FormControl(''),
     progressNote: new FormControl('')
   });
+  progressNote = 'Initial progress note';
 }
