@@ -10,6 +10,15 @@
 <p>Current Note: {{ progressNote }}</p>
 
 <form [formGroup]="progressForm">
+    <div>
+        <label for="project-code">Project Code:</label>
+        <input
+            id="project-code"
+            type="text"
+            formControlName="projectCode"
+            (blur)="updateProjectName()">
+        <p>{{ errorMessage }}</p>
+    </div>
 
     <div>
         <label for="project-name">Project Name:</label>
