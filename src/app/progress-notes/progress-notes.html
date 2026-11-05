@@ -1,64 +1,67 @@
 <h2>Progress Notes</h2>
 
-<label for="progress-note">Progress Note:</label>
+<h3>{{ editingId ? 'Edit Progress Note' : 'Add Progress Note' }}</h3>
 
-<input
-    id="progress-note"
-    type="text"
-    [(ngModel)]="progressNote">
+<form [formGroup]="progressForm" (ngSubmit)="onSubmit()">
 
-<p>Current Note: {{ progressNote }}</p>
+  <label>Project Code:</label>
+  <input type="text" formControlName="projectCode" (blur)="updateProjectName()">
+  @if (errorMessage) {
+    <span class="error">{{ errorMessage }}</span>
+  }
 
-<form [formGroup]="progressForm">
-    <div>
-        <label for="project-code">Project Code:</label>
-        <input
-            id="project-code"
-            type="text"
-            formControlName="projectCode"
-            (blur)="updateProjectName()">
-        <p>{{ errorMessage }}</p>
-    </div>
+  <label>Project Name:</label>
+  <input type="text" formControlName="projectName">
 
-    <div>
-        <label for="project-name">Project Name:</label>
-        <input
-            id="project-name"
-            type="text"
-            formControlName="projectName">
-    </div>
+  <label>Date:</label>
+  <input type="date" formControlName="date">
 
-    <div>
-        <label for="date">Date:</label>
-        <input
-            id="date"
-            type="date"
-            formControlName="date">
-    </div>
+  <label>Current Status:</label>
+  <select formControlName="currentStatus">
+    <option value="" disabled>Select a status</option>
+    <option value="On Track">On Track</option>
+    <option value="Needs Attention">Needs Attention</option>
+    <option value="Completed">Completed</option>
+  </select>
 
-    <div>
-        <label for="current-status">Current Status:</label>
-        <select id="current-status" formControlName="currentStatus">
-            <option value="On Track">On Track</option>
-            <option value="Needs Attention">Needs Attention</option>
-            <option value="Completed">Completed</option>
-        </select>
-    </div>
+  <label>Team Member:</label>
+  <input type="text" formControlName="teamMember">
 
-    <div>
-        <label for="team-member">Team Member:</label>
-        <input
-            id="team-member"
-            type="text"
-            formControlName="teamMember">
-    </div>
+  <label>Progress Note:</label>
+  <textarea formControlName="progressNote"></textarea>
 
-    <div>
-        <label for="progress-note">Progress Note:</label>
-        <input
-            id="progress-note"
-            type="text"
-            formControlName="progressNote">
-    </div>
-
+  <button type="submit" [disabled]="progressForm.invalid">
+    {{ editingId ? 'Update Note' : 'Save Note' }}
+  </button>
+  @if (editingId) {
+    <button type="button" (click)="resetForm()">Cancel</button>
+  }
 </form>
+
+<!-- Details of one note -->
+@if (selectedNote) {
+  <div class="details">
+    <h3>Note Details</h3>
+    <p>Project Code: {{ selectedNote.projectCode }}</p>
+    <p>Project Name: {{ selectedNote.projectName }}</p>
+    <p>Date: {{ selectedNote.date.substring(0, 10) }}</p>
+    <p>Current Status: {{ selectedNote.currentStatus }}</p>
+    <p>Team Member: {{ selectedNote.teamMember }}</p>
+    <p>Progress Note: {{ selectedNote.progressNote }}</p>
+    <button type="button" (click)="selectedNote = null">Close</button>
+  </div>
+}
+
+<!-- List of all notes -->
+<h3>All Progress Notes</h3>
+@for (note of notes; track note._id) {
+  <div class="note">
+    <h4>{{ note.projectName }} ({{ note.projectCode }})</h4>
+    <p>{{ note.currentStatus }} | {{ note.teamMember }}</p>
+    <button type="button" (click)="onView(note._id)">View</button>
+    <button type="button" (click)="onEdit(note)">Edit</button>
+    <button type="button" (click)="onDelete(note._id)">Delete</button>
+  </div>
+} @empty {
+  <p>No progress notes found.</p>
+}

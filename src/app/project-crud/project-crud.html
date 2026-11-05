@@ -1,0 +1,41 @@
+<!-- Project list heading -->
+<h2>Project Progress Tracker - MongoDB</h2>
+
+<!-- Link to the Add Project form -->
+<p>
+  <a routerLink="/projects/new">Add New Project</a>
+</p>
+
+<!-- Display projects retrieved from MongoDB -->
+@for (project of projects; track project._id) {
+
+  <div>
+    <h3>{{ project.projectName }}</h3>
+
+    <p>Description: {{ project.description }}</p>
+    <p>Start Date: {{ project.startDate }}</p>
+    <p>Status: {{ project.status }}</p>
+    <p>Team Member: {{ project.teamMember }}</p>
+    <p>Progress Note: {{ project.progressNote }}</p>
+
+    <!-- Edit the selected project -->
+    <button
+      type="button"
+      [routerLink]="['/projects/edit', project._id]">
+      Edit
+    </button>
+
+    <!-- Delete the selected project -->
+    <button
+      type="button"
+      (click)="onDelete(project._id)">
+      Delete
+    </button>
+
+  </div>
+
+} @empty {
+
+  <p>No projects found.</p>
+
+}

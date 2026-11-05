@@ -1,0 +1,60 @@
+<!-- Form for adding and editing projects -->
+<h2>
+  {{ projectId ? 'Edit Project' : 'Add New Project' }}
+</h2>
+
+<form
+  [formGroup]="projectForm"
+  (ngSubmit)="onSubmit()">
+
+  <!-- Project Name -->
+  <label>Project Name:</label>
+  <input
+    type="text"
+    formControlName="projectName">
+
+  <!-- Description -->
+  <label>Description:</label>
+  <input
+    type="text"
+    formControlName="description">
+
+  <!-- Start Date -->
+  <label>Start Date:</label>
+  <input
+    type="date"
+    formControlName="startDate">
+
+  <!-- Status -->
+  <label>Status:</label>
+  <select formControlName="status">
+    <option value="Not Started">Not Started</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Completed">Completed</option>
+  </select>
+
+  <!-- Team Member -->
+  <label>Team Member:</label>
+  <input
+    type="text"
+    formControlName="teamMember">
+
+  <!-- Progress Note -->
+  <label>Progress Note:</label>
+  <textarea
+    formControlName="progressNote"></textarea>
+
+  <!-- Save or Update -->
+  <button
+    type="submit"
+    [disabled]="projectForm.invalid">
+
+    {{ projectId ? 'Update Project' : 'Save Project' }}
+
+  </button>
+
+</form>
+
+<p>
+  <a routerLink="/projects">Back to Projects</a>
+</p>
